@@ -82,9 +82,10 @@ fn open_code() {
                 Command::new("sh")
                     // .args(&["-c", "open", "-e", format!("jihuoma/{}", filename).as_str()])
                     .arg("-c")
-                    .arg(format!("open -e \"jihuoma/{}\"", filename))
+                    .arg(format!("pbcopy < \"jihuoma/{}\"", filename))
                     .output()
                     .expect("打开激活码失败");
+                println!("激活码已复制到剪切板！");
             },
             _ => ()
         }
