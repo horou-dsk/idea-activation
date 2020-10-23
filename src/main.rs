@@ -27,7 +27,8 @@ fn bin_rpath(filename: &str) -> String {
 }
 
 async fn request_file() -> io::Result<()> {
-    let resp = match reqwest::get("http://idea.medeming.com/jets/images/jihuoma.zip").await {
+    let client = reqwest::Client::builder().no_proxy().build().unwrap();
+    let resp = match client.get("http://idea.medeming.com/jets/images/jihuoma.zip").send().await {
         Ok(resp) => resp,
         Err(err) => {
             println!("{}", err);
