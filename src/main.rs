@@ -54,7 +54,7 @@ fn open_code() {
     for dir in dirs {
         let f = dir.unwrap().file_name();
         let filename = f.to_string_lossy();
-        match filename.find("later") {
+        match filename.find("2018") {
             Some(_) => {
                 Command::new("cmd")
                     .args(&["/C", "notepad", &("jihuoma/".to_string() + &*filename.to_string())])
@@ -78,7 +78,7 @@ fn open_code() {
     for dir in dirs {
         let f = dir.unwrap().file_name();
         let filename = f.to_string_lossy();
-        match filename.find("later") {
+        match filename.find("2018") {
             Some(_) => {
                 Command::new("sh")
                     // .args(&["-c", "open", "-e", format!("jihuoma/{}", filename).as_str()])
