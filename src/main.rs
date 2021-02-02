@@ -7,6 +7,7 @@ use std::string::String;
 use encoding_rs::{GBK};
 use lazy_static::lazy_static;
 use std::env;
+use std::ops::Deref;
 
 lazy_static! {
     static ref BIN_PATH: String = {
@@ -27,7 +28,7 @@ fn bin_rpath(filename: &str) -> String {
 }
 
 async fn request_file() -> io::Result<()> {
-    let client = reqwest::Client::builder().no_proxy().build().unwrap();
+    let client = reqwest::Client::builder().build().unwrap();
     let resp = match client.get("http://idea.medeming.com/jets/images/jihuoma.zip").send().await {
         Ok(resp) => resp,
         Err(err) => {
@@ -37,7 +38,16 @@ async fn request_file() -> io::Result<()> {
     };
     let mut out = File::create("jihuoma.zip").await?;
     let bytes = resp.bytes().await.unwrap();
-    out.write(&mut bytes.to_vec()).await?;
+    out.write_all(&mut bytes.deref()).await?;
+    // let mut bufs = bytes.to_vec();
+    // let mut buf = 0;
+    // loop {
+    //     buf += out.write(&mut bufs[buf..]).await?;
+    //     if buf >= bufs.len() {
+    //         break
+    //     }
+    // }
+    // println!("{}", bytes)
     Ok(())
 }
 
